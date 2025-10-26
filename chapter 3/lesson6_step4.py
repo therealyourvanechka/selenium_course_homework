@@ -5,6 +5,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+@pytest.fixture(scope="session")
+def load_config():
+    """Фикстура для загрузки конфигурации из JSON файла"""
+    with open('chapter 3/config.json', 'r') as config_file:  
+        config = json.load(config_file)
+        return config
 
 @pytest.fixture
 def browser():
@@ -15,16 +21,16 @@ def browser():
 
 
 class TestLogin:
-    def test_authorization(self, load_config, browser):  # ← добавляем browser как параметр
+    def test_authorization(self, load_config, browser):  
         # Создаем явное ожидание
-        wait = WebDriverWait(browser, 10)  # ← используем browser вместо self.browser
+        wait = WebDriverWait(browser, 10)  
         
         # Получаем логин и пароль из конфига
         login = load_config['login_stepik']
         password = load_config['password_stepik']
         
         # Открываем страницу урока
-        browser.get("https://stepik.org/lesson/236895/step/1")  # ← browser вместо self.browser
+        browser.get("https://stepik.org/lesson/236895/step/1")  
         
         # Нажимаем кнопку "Войти" 
         login_button = wait.until(
@@ -54,5 +60,3 @@ class TestLogin:
         wait.until(
             EC.visibility_of_element_located((By.CLASS_NAME, "navbar__profile-img"))
         )
-        
-        print("Авторизация прошла успешно!")
