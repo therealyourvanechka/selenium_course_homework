@@ -9,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 @pytest.fixture(scope="session")
 def load_config():
     """Фикстура для загрузки конфигурации из JSON файла"""
-    with open('config.json', 'r') as config_file:
+    with open('chapter 3/config.json', 'r') as config_file:
         config = json.load(config_file)
         return config
 
